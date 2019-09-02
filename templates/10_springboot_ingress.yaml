@@ -1,0 +1,26 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-ingress-controller-app-ingress
+  namespace: ${NS}
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: ${H}
+    http:
+      paths:
+      - path: /actuator/health
+        backend:
+          serviceName: springboot
+          servicePort: 8086
+      - path: /users/list
+        backend:
+          serviceName: springboot
+          servicePort: 8086
+      - path: /users/create
+        backend:
+          serviceName: springboot
+          servicePort: 8086
+
