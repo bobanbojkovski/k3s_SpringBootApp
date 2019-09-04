@@ -15,6 +15,18 @@ make env=dev docker_build
 
 Environment variables are defined in dev.env, test.env files and mapped in template configurations placed under **templates** directory.
 
+Also update <node_name> in persistent volume file:
+
+```
+required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - <node_name>
+```
+
 **build_files** target in Makefile prepares environment specific deployments in **deployments** directory. The dir should be manually created before running the task.
 
 ```
