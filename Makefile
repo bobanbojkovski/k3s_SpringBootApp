@@ -9,7 +9,7 @@ endif
 
 
 TEMPLATES_DIR	?=	./templates
-BUILDS_DIR		?=	./deployments
+BUILDS_DIR	?=	./deployments
 
 MAKE_ENV += NS H
 SHELL_EXPORT := $(foreach v,$(MAKE_ENV),$(v)='$($(v))' )
@@ -17,11 +17,15 @@ SHELL_EXPORT := $(foreach v,$(MAKE_ENV),$(v)='$($(v))' )
 
 docker_build:
 	$(info docker build environment images)
-	@docker build . -t localhost:5000/demo:0.1 --no-cache --pull
+	@docker build . -t localhost:5000/demo:0.1 --rm --no-cache --pull
+	@make --silent docker_clean
 	
 docker_push:
 	$(info docker push environment images)
 	@docker push localhost:5000/demo:0.1
+
+docker_clean:
+	@docker system prune --volumes --force
 
 build_files:
 	$(info prepare deploy files)
