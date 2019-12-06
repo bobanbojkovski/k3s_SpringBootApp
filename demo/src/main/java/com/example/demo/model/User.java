@@ -17,6 +17,14 @@ public class User {
         return id;
     }
 
+    protected User() {}
+
+    public User(String username, String password) {
+
+        this.username = validate(username);
+        this.password = validate(password);
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -35,6 +43,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String validate(String text) {
+        if (text == null || text.isEmpty() || !text.matches("^[a-zA-Z0-9_]*$")) {
+            throw new IllegalArgumentException(
+                "illegal string value: [" + text + "]");
+        }
+        return text;
     }
     
 }
